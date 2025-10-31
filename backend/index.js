@@ -11,7 +11,10 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB setup with cached connection
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.cb9e028.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+// Prefer a full connection string in MONGO_URI; otherwise build one from DB_USER/DB_PASS
+const uri = process.env.MONGO_URI || `mongodb+srv://${process.env.DB_USER}:${encodeURIComponent(
+  process.env.DB_PASS || ""
+)}@cluster0.cb9e028.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -23,11 +26,35 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
+    // Show which URI we're using (mask the password) to help debugging without leaking secrets
+    try {
+      const usedRawUri = uri || "";
+      const safeUri = usedRawUri.replace(/:\/\/([^:]+):([^@]+)@/, "://$1:*****@");
+      // print up to the query string so logs don't include tokens
+      console.log("Connecting to MongoDB using:", (safeUri.split('?')[0] || safeUri));
+    } catch (e) {
+      // ignore any masking errors
+    }
+
+    // Connect the client to the server (recommended)
+    try {
+      await client.connect();
+    } catch (connectErr) {
+      // Provide a clearer log that doesn't expose the password
+      try {
+        const usedRawUri = uri || "";
+        const safeUri = usedRawUri.replace(/:\/\/([^:]+):([^@]+)@/, "://$1:*****@");
+        console.error("Failed to connect to MongoDB using:", (safeUri.split('?')[0] || safeUri));
+      } catch (e) {}
+      console.error("MongoDB connect error:", connectErr && connectErr.message ? connectErr.message : connectErr);
+      throw connectErr;
+    }
     // Send a ping to confirm a successful connection
     const tasksCollection = client.db("tasksDB").collection("tasks");
     const bidsCollection = client.db("tasksDB").collection("bids");
+
+  await client.db("admin").command({ ping: 1 });
+    console.log("✅ MongoDB connected successfully!")
 
     app.get("/tasks", async (req, res) => {
       const email = req.query.email;
