@@ -124,7 +124,7 @@ const Header = ({ allTasks }) => {
             to="/"
             className="text-2xl font-bold flex items-center gap-2"
           >
-            <img className="w-8 sm:w-9" src={Logo} alt="TaskHub Logo" />
+            <img className="w-8 sm:w-9" src={Logo} alt="Logo" />
             <span className="text-white font-serif">FreelancerHub</span>
           </NavLink>
         </div>
