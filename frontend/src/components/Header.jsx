@@ -201,7 +201,7 @@ const Header = ({ allTasks }) => {
           : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
       }`}
     >
-      <div className="p-3 sm:p-4 bg-gradient-to-r from-teal-500 to-teal-600">
+      <div className="p-3 sm:p-4 bg-linear-to-r from-teal-500 to-teal-600">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-white">
             <img
@@ -227,7 +227,7 @@ const Header = ({ allTasks }) => {
       <div className="divide-y divide-gray-100 dark:divide-gray-700">
         <NavLink
           to="/profile"
-          className="block px-3 sm:px-4 py-2 sm:py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors flex items-center gap-2"
+          className="px-3 sm:px-4 py-2 sm:py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors flex items-center gap-2"
           onClick={() => setIsOpen(false)}
         >
           <svg
@@ -248,7 +248,7 @@ const Header = ({ allTasks }) => {
         </NavLink>
         <NavLink
           to="/my-tasks"
-          className="block px-3 sm:px-4 py-2 sm:py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors flex items-center gap-2"
+          className="black px-3 sm:px-4 py-2 sm:py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors flex items-center gap-2"
           onClick={() => setIsOpen(false)}
         >
           <svg
@@ -303,7 +303,7 @@ const Header = ({ allTasks }) => {
     </NavLink>
     <NavLink
       to="/signup"
-      className="px-3 py-1.5 text-sm rounded-md bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:from-teal-600 hover:to-teal-700 transition-colors"
+      className="px-3 py-1.5 text-sm rounded-md bg-linear-to-r from-teal-500 to-teal-600 text-white hover:from-teal-600 hover:to-teal-700 transition-colors"
     >
       Sign Up
     </NavLink>
