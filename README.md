@@ -1,3 +1,4 @@
+# Freelancer Hub
 Freelancer Hub is a full-stack web application that connects freelancers with clients, providing a platform for task posting, bidding, and project management. Built with modern technologies including React, Node.js, and MongoDB.
 
 ## � About
